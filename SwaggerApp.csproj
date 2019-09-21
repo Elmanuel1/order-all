@@ -8,11 +8,13 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+    <PackageReference Include="Evolve" Version="2.2.0" />
     <PackageReference Include="FluentValidation" Version="8.4.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Api.Analyzers" Version="2.2.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="1.2.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.9.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.0.3" />
     <PackageReference Include="Serilog" Version="2.8.0" />
@@ -22,6 +24,12 @@
     <PackageReference Include="Serilog.Sinks.ElasticSearch" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.Tcp" Version="1.0.4" />
     <PackageReference Include="Serilog.Sinks.UDP" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Service\Impl\MerchantService" />
+    <Folder Include="Service\Impl\PaymentService" />
+    <Folder Include="Service\Impl\UserService" />
   </ItemGroup>
 
 </Project>

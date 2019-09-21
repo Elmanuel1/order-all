@@ -18,9 +18,9 @@ namespace SwaggerApp.Exceptions.handler
 
             KoboWashResult result;
             // handle custom errors that will be thrown at by the application
-            if (exception is KoboWashException)
+            if (exception is ApplicationException)
             {
-                result = new KoboWashResult(((KoboWashException)exception).Code, exception.Message);
+                result = new KoboWashResult(((ApplicationException)exception).Code, exception.Message);
                 statusCode = HttpStatusCode.BadRequest;
                 //return applicationResponse;
             }

@@ -6,5 +6,8 @@
         public static string NotFound => "04";
         public static string InternalServerError => "05";
         public static string RequestValidationError => "06";
+        public static string BadRequest => "30";
+
+        
     }
 }

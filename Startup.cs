@@ -15,8 +15,10 @@ using System.Diagnostics;
 using System.Net.Sockets;
 using System.Reflection;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Formatting.Elasticsearch;
+using SwaggerApp.config;
 using SwaggerApp.Controllers.handler;
 using SwaggerApp.Exceptions.handler;
 using SwaggerApp.Service;
@@ -48,6 +50,9 @@ namespace SwaggerApp
             var logger = loggerConfig.CreateLogger();
             Log.Logger = logger;
             Serilog.Debugging.SelfLog.Enable(Console.Error);
+            
+            
+            
 
             Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json")
             .Build();
@@ -57,11 +62,22 @@ namespace SwaggerApp
 
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.Configure<OrderStoreDatabaseSettings>(
+                Configuration.GetSection(nameof(IOrderStoreDatabaseSettings)));
+            
+            services.AddSingleton<IOrderStoreDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<OrderStoreDatabaseSettings>>().Value);
+
+            //set up singleton to allow for connection pooling 
+            services.AddSingleton<IMongoDatasource, MongoDatasource>();
+            services.AddSingleton<IOrderRepository, OrderRepository>();
+            
             services.AddDbContext<SampleContext>(options =>
                 options.UseInMemoryDatabase("SampleData"));
 
             services.AddMvc(opts=>{
-                   // opts.Filters.Add(typeof(ModelStateFeatureFilter));
+                  
             }).AddFluentValidation(fv => {
                     fv.RegisterValidatorsFromAssemblyContaining<FruitValidator>();
                     fv.RegisterValidatorsFromAssemblyContaining<MerchantValidator>();
@@ -70,6 +86,10 @@ namespace SwaggerApp
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddControllersAsServices();
+            
+            //var 
+           
+            
             services.AddHsts(options =>
             {
                 options.Preload = true;
